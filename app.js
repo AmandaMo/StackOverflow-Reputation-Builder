@@ -1,10 +1,19 @@
 $(document).ready( function() {
 	$('.unanswered-getter').submit( function(event){
+		console.log("unanswered button pushed");
 		// zero out results if previous search has run
 		$('.results').html('');
 		// get the value of the tags the user submitted
 		var tags = $(this).find("input[name='tags']").val();
 		getUnanswered(tags);
+	});
+	$('.inspiration-getter').submit( function(event){
+		console.log("inspiration button pushed");
+		// zero out results if previous search has run
+		$('.results').html('');
+		// get the value of the tags the user submitted
+		var tags = $(this).find("input[name='inspiration']").val();
+		getTop(tags);
 	});
 });
 
@@ -90,33 +99,6 @@ var getUnanswered = function(tags) {
 
 ////////////////My code starts Here\\\\\\\\\\\\\\\\
 
-$(document).ready( function() {
-	$('.inspirations-getter').submit( function(event){
-		// zero out results if previous search has run
-		$('.results').html('');
-		// get the value of the tags the user submitted
-		var tags = $(this).find("input[name='inspiration']").val();
-		getTop(tags);
-	});
-});
-
-// var showInspiration = function(inspiration) {
-	
-// 	var result = $('.templates .result inspiration').clone();
-	
-// 	var answererElem = result.find('.inspiration a');
-// 	answererElem.attr('href', answerer.user.link);
-// 	answererElem.text(answerer.user.display_name);
-
-// 	var reputationElem = result.find('.reputation');
-// 	reputationElem.text(answerer.user.reputation);
-	
-// 	var postCount = result.find(".post-count");
-// 	postCount.text(answerer.post_count);
-
-// 	return result;
-// };
-
 var showInspiration = function(inspiration) {
 	
 	// clone our result template code
@@ -132,9 +114,10 @@ var showInspiration = function(inspiration) {
 	reputationElem.text(inspiration.user.reputation);
 
 	// set the #views for question property in result
-	var viewed = result.find('.post-count');
+	var postCount = result.find('.post-count');
 	postCount.text(inspiration.post_count);
 
+	console.log(result);
 	return result;
 };
 
@@ -159,6 +142,7 @@ var getTop = function(tags) {
 
 		$.each(result.items, function(i, item) {
 			var inspiration = showInspiration(item);
+			console.log(i + "" + item);
 			$('.results').append(inspiration);
 		});
 	})
