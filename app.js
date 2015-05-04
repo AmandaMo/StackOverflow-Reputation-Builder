@@ -95,24 +95,45 @@ $(document).ready( function() {
 		// zero out results if previous search has run
 		$('.results').html('');
 		// get the value of the tags the user submitted
-		var tags = $(this).find("input[name='tags']").val();
+		var tags = $(this).find("input[name='inspiration']").val();
 		getTop(tags);
 	});
 });
 
+// var showInspiration = function(inspiration) {
+	
+// 	var result = $('.templates .result inspiration').clone();
+	
+// 	var answererElem = result.find('.inspiration a');
+// 	answererElem.attr('href', answerer.user.link);
+// 	answererElem.text(answerer.user.display_name);
+
+// 	var reputationElem = result.find('.reputation');
+// 	reputationElem.text(answerer.user.reputation);
+	
+// 	var postCount = result.find(".post-count");
+// 	postCount.text(answerer.post_count);
+
+// 	return result;
+// };
+
 var showInspiration = function(inspiration) {
 	
-	var result = $('.templates .result inspiration').clone();
+	// clone our result template code
+	var result = $('.templates .inspiration').clone();
 	
-	var answererElem = result.find('.inspiration a');
-	answererElem.attr('href', answerer.user.link);
-	answererElem.text(answerer.user.display_name);
+	// Set the question properties in result
+	var inspirationElem = result.find('.inspiration-text a');
+	inspirationElem.attr('href', inspiration.link);
+	inspirationElem.text(inspiration.user.display_name);
 
+	// set the date asked property in result
 	var reputationElem = result.find('.reputation');
-	reputationElem.text(answerer.user.reputation);
-	
-	var postCount = result.find(".post-count");
-	postCount.text(answerer.post_count);
+	reputationElem.text(inspiration.user.reputation);
+
+	// set the #views for question property in result
+	var viewed = result.find('.post-count');
+	postCount.text(inspiration.post_count);
 
 	return result;
 };
@@ -137,8 +158,8 @@ var getTop = function(tags) {
 		$('.search-results').html(searchResults);
 
 		$.each(result.items, function(i, item) {
-			var question = showQuestion(item);
-			$('.results').append(question);
+			var inspiration = showInspiration(item);
+			$('.results').append(inspiration);
 		});
 	})
 	.fail(function(jqXHR, error, errorThrown){
@@ -148,7 +169,3 @@ var getTop = function(tags) {
 };
 
 
-// <form class="inspiration-getter" onsubmit="return false;">
-// 				<input type="text" placeholder="e.g., jQuery" name="answerers" size="30"  required>
-// 				<input type="submit" value="Submit">
-// 			</form>
