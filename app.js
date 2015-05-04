@@ -11,11 +11,12 @@ $(document).ready( function() {
 		// zero out results if previous search has run
 		$('.results').html('');
 		// get the value of the tags the user submitted
-		var answers = $(this).find("input[name='answers']").val();
-		getTop(answers);
-		console.log(answers);
+		var inspirations = $(this).find("input[name='inspirations']").val();
+		getTop(inspirations);
+		console.log(inspirations);
 	});
 });
+
 
 // this function takes the question object returned by StackOverflow 
 // and creates new result to be appended to DOM
@@ -55,6 +56,7 @@ var showQuestion = function(question) {
 // and creates info about search results to be appended to DOM
 var showSearchResults = function(query, resultNum) {
 	var results = resultNum + ' results for <strong>' + query;
+	console.log(results);
 	return results;
 };
 
@@ -63,6 +65,7 @@ var showError = function(error){
 	var errorElem = $('.templates .error').clone();
 	var errorText = '<p>' + error + '</p>';
 	errorElem.append(errorText);
+	console.log(errorText);
 };
 
 // takes a string of semi-colon separated tags to be searched
@@ -95,36 +98,34 @@ var getUnanswered = function(tags) {
 		var errorElem = showError(error);
 		$('.search-results').append(errorElem);
 	});
+	console.log(result);
 };
 
 ////////////////My code starts Here\\\\\\\\\\\\\\\\
 
-var showInspiration = function(question) {
+var showInspiration = function(inspirations) {
 	
 	// clone our result template code
 	var result = $('.templates .inspiration').clone();
 
+
 	// Set the question properties in result
-	var inspirationElem = result.find('.question-text a');
-	inspirationElem.attr('href', question.link);
-	inspirationElem.text(question.title);
-	console.log(question.title);
+	var inspiration = result.find('.inspiration-text a');
+	inspiration.attr('href', inspirations.link);
+	inspiration.text(inspirations.title);
+	console.log(inspirations.title);
+
 	// set the date asked property in result
-	var reputationElem = result.find('.reputation');
-	reputationElem.text(question.user.reputation);
-	console.log(question.user.reputation);
+	var reputation = result.find('.reputation');
+	reputation.text(inspirations.user.reputation);
 	// set the #views for question property in result
 	var postCount = result.find('.post-count');
-	postCount.text(question.post_count);
-	console.log(question.post_count);
+	postCount.text(inspirations.post_count);
 
-	// var asker = result.find('.asker2');
-	// 	asker.html('<p>Name: <a target="_blank" href=http://stackoverflow.com/users/' + inspiration.owner.user_id + ' >' +
-	// 													inspiration.owner.display_name +
-	// 												'</a>' +
-	// 							'</p>' +
-	//  							'<p>Reputation: ' + inspiration.owner.reputation + '</p>'
-	// );
+
+	var answerer= result.find('.answerer-text a');
+	answerer.attr('href', inspirations.user.link);
+	answerer.text(inspirations.user.display_name);
 
 	return result;
 };
@@ -158,6 +159,7 @@ var getTop = function(tags) {
 		var errorElem = showError(error);
 		$('.search-results').append(errorElem);
 	});
+	console.log(result);
 };
 
 
