@@ -1,19 +1,19 @@
 $(document).ready( function() {
 	$('.unanswered-getter').submit( function(event){
-		console.log("unanswered button pushed");
 		// zero out results if previous search has run
 		$('.results').html('');
 		// get the value of the tags the user submitted
 		var tags = $(this).find("input[name='tags']").val();
 		getUnanswered(tags);
+		console.log(tags);
 	});
 	$('.inspiration-getter').submit( function(event){
-		console.log("inspiration button pushed");
 		// zero out results if previous search has run
 		$('.results').html('');
 		// get the value of the tags the user submitted
-		var tags = $(this).find("input[name='inspiration']").val();
-		getTop(tags);
+		var answers = $(this).find("input[name='answers']").val();
+		getTop(answers);
+		console.log(answers);
 	});
 });
 
@@ -99,25 +99,33 @@ var getUnanswered = function(tags) {
 
 ////////////////My code starts Here\\\\\\\\\\\\\\\\
 
-var showInspiration = function(inspiration) {
+var showInspiration = function(question) {
 	
 	// clone our result template code
 	var result = $('.templates .inspiration').clone();
-	
-	// Set the question properties in result
-	var inspirationElem = result.find('.inspiration-text a');
-	inspirationElem.attr('href', inspiration.link);
-	inspirationElem.text(inspiration.user.display_name);
 
+	// Set the question properties in result
+	var inspirationElem = result.find('.question-text a');
+	inspirationElem.attr('href', question.link);
+	inspirationElem.text(question.title);
+	console.log(question.title);
 	// set the date asked property in result
 	var reputationElem = result.find('.reputation');
-	reputationElem.text(inspiration.user.reputation);
-
+	reputationElem.text(question.user.reputation);
+	console.log(question.user.reputation);
 	// set the #views for question property in result
 	var postCount = result.find('.post-count');
-	postCount.text(inspiration.post_count);
+	postCount.text(question.post_count);
+	console.log(question.post_count);
 
-	console.log(result);
+	// var asker = result.find('.asker2');
+	// 	asker.html('<p>Name: <a target="_blank" href=http://stackoverflow.com/users/' + inspiration.owner.user_id + ' >' +
+	// 													inspiration.owner.display_name +
+	// 												'</a>' +
+	// 							'</p>' +
+	//  							'<p>Reputation: ' + inspiration.owner.reputation + '</p>'
+	// );
+
 	return result;
 };
 
